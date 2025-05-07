@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright(c) 2025 Fraunhofer AISEC
+Fraunhofer-Gesellschaft zur Foerderung der angewandten Forschung e.V.
+
+This program is free software; you can redistribute it and/or modify it
+under the terms and conditions of the GNU General Public License,
+version 2 (GPL 2), as published by the Free Software Foundation.
+
+This program is distributed in the hope it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GPL 2 license for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program; if not, see <http://www.gnu.org/licenses/>
+-->
+
+<image schemaversion="7.5" name="kiwi-pqc-ima">
+    <description type="system">
+        <author>Johannes Wiesboeck</author>
+        <contact>johannes.wiesboeck@aisec.fraunhofer.de</contact>
+        <specification>PQC-IMA evaluation images</specification>
+    </description>
+    <profiles>
+        <profile name="ext4-apache" description="OEM image of Debian"/>
+        <profile name="ext4-gnome" description="OEM image of Debian"/>
+        <profile name="btrfs-apache" description="Modified OEM image of Debian"/>
+        <profile name="btrfs-gnome" description="Modified OEM image of Debian"/>
+        <profile name="xfs-apache" description="Modified OEM image of Debian"/>
+        <profile name="xfs-gnome" description="Modified OEM image of Debian"/>
+        <profile name="bcachefs-apache" description="Modified OEM image of Debian"/>
+        <profile name="bcachefs-gnome" description="Modified OEM image of Debian"/>
+        <profile name="f2fs-apache" description="Modified OEM image of Debian"/>
+        <profile name="f2fs-gnome" description="Modified OEM image of Debian"/>
+    </profiles>
+    <preferences>
+        <version>12.1</version>
+        <packagemanager>apt</packagemanager>
+        <bootsplash-theme>fade-in</bootsplash-theme>
+        <bootloader-theme>starfield</bootloader-theme>
+        <rpm-check-signatures>false</rpm-check-signatures>
+        <locale>en_US</locale>
+        <keytable>de</keytable>
+        <timezone>Europe/Berlin</timezone>
+    </preferences>
+    <preferences profiles="ext4-apache">
+        <type image="oem" filesystem="ext4" firmware="efi" installiso="false" installboot="install" kernelcmdline="console=ttyS0" devicepersistency="by-partuuid" editbootinstall="set_varlog_uuid.sh" efipartsize="200">
+	    <size unit="G" additive="false">10</size>
+            <bootloader name="systemd_boot" timeout="0"/>
+            <oemconfig>
+                <oem-swap>true</oem-swap>
+                <oem-unattended>true</oem-unattended>
+                <oem-device-filter>/dev/ram</oem-device-filter>
+                <oem-multipath-scan>false</oem-multipath-scan>
+            </oemconfig>
+	    <partitions>
+		    <partition name="varlog" size="500" mountpoint="/var/log" filesystem="ext4"/>
+	    </partitions>
+        </type>
+    </preferences>
+    <preferences profiles="btrfs-apache">
+        <type image="oem" filesystem="btrfs" firmware="efi" installiso="false" installboot="install" kernelcmdline="console=ttyS0" devicepersistency="by-partuuid" editbootinstall="set_varlog_uuid.sh" efipartsize="200" fscreateoptions="-n 65536">
+	    <size unit="G" additive="false">10</size>
+            <bootloader name="systemd_boot" timeout="0"/>
+            <oemconfig>
+                <oem-swap>true</oem-swap>
+                <oem-unattended>true</oem-unattended>
+                <oem-device-filter>/dev/ram</oem-device-filter>
+                <oem-multipath-scan>false</oem-multipath-scan>
+            </oemconfig>
+	    <partitions>
+		    <partition name="varlog" size="500" mountpoint="/var/log" filesystem="btrfs"/>
+	    </partitions>
+        </type>
+    </preferences>
+    <preferences profiles="xfs-apache">
+        <type image="oem" filesystem="xfs" firmware="efi" installiso="false" installboot="install" kernelcmdline="console=ttyS0" devicepersistency="by-partuuid" editbootinstall="set_varlog_uuid.sh" efipartsize="200" fscreateoptions="-m rmapbt=1">
+	    <size unit="G" additive="false">10</size>
+            <bootloader name="systemd_boot" timeout="0"/>
+            <oemconfig>
+                <oem-swap>true</oem-swap>
+                <oem-unattended>true</oem-unattended>
+                <oem-device-filter>/dev/ram</oem-device-filter>
+                <oem-multipath-scan>false</oem-multipath-scan>
+            </oemconfig>
+	    <partitions>
+		    <partition name="varlog" size="500" mountpoint="/var/log" filesystem="xfs"/>
+	    </partitions>
+        </type>
+    </preferences>
+    <preferences profiles="bcachefs-apache">
+        <type image="oem" filesystem="bcachefs" firmware="efi" installiso="false" installboot="install" kernelcmdline="console=ttyS0" devicepersistency="by-partuuid" editbootinstall="set_varlog_uuid.sh" efipartsize="200">
+	    <size unit="G" additive="false">10</size>
+            <bootloader name="systemd_boot" timeout="0"/>
+            <oemconfig>
+                <oem-swap>true</oem-swap>
+                <oem-unattended>true</oem-unattended>
+                <oem-device-filter>/dev/ram</oem-device-filter>
+                <oem-multipath-scan>false</oem-multipath-scan>
+            </oemconfig>
+	    <partitions>
+		    <partition name="varlog" size="500" mountpoint="/var/log" filesystem="bcachefs"/>
+	    </partitions>
+        </type>
+    </preferences>
+    <preferences profiles="f2fs-apache">
+        <type image="oem" filesystem="f2fs" firmware="efi" installiso="false" installboot="install" kernelcmdline="console=ttyS0" devicepersistency="by-partuuid" editbootinstall="set_varlog_uuid.sh" efipartsize="200" fscreateoptions="-O extra_attr,flexible_inline_xattr" fsmountoptions="inline_xattr,inline_xattr_size=160">
+	    <size unit="G" additive="false">10</size>
+            <bootloader name="systemd_boot" timeout="0"/>
+            <oemconfig>
+                <oem-swap>true</oem-swap>
+                <oem-unattended>true</oem-unattended>
+                <oem-device-filter>/dev/ram</oem-device-filter>
+                <oem-multipath-scan>false</oem-multipath-scan>
+            </oemconfig>
+	    <partitions>
+		    <partition name="varlog" size="500" mountpoint="/var/log" filesystem="f2fs"/>
+	    </partitions>
+        </type>
+    </preferences>
+
+
+    <preferences profiles="ext4-gnome">
+        <type image="oem" filesystem="ext4" firmware="efi" installiso="false" installboot="install" kernelcmdline="console=ttyS0" devicepersistency="by-partuuid" editbootinstall="set_varlog_uuid.sh" efipartsize="200">
+	    <size unit="G" additive="false">51</size>
+            <bootloader name="systemd_boot" timeout="0"/>
+            <oemconfig>
+                <oem-swap>true</oem-swap>
+                <oem-unattended>true</oem-unattended>
+                <oem-device-filter>/dev/ram</oem-device-filter>
+                <oem-multipath-scan>false</oem-multipath-scan>
+            </oemconfig>
+	    <partitions>
+		    <partition name="varlog" size="500" mountpoint="/var/log" filesystem="ext4"/>
+	    </partitions>
+        </type>
+    </preferences>
+    <preferences profiles="btrfs-gnome">
+        <type image="oem" filesystem="btrfs" firmware="efi" installiso="false" installboot="install" kernelcmdline="console=ttyS0" devicepersistency="by-partuuid" editbootinstall="set_varlog_uuid.sh" efipartsize="200" fscreateoptions="-n 65536">
+	    <size unit="G" additive="false">51</size>
+            <bootloader name="systemd_boot" timeout="0"/>
+            <oemconfig>
+                <oem-swap>true</oem-swap>
+                <oem-unattended>true</oem-unattended>
+                <oem-device-filter>/dev/ram</oem-device-filter>
+                <oem-multipath-scan>false</oem-multipath-scan>
+            </oemconfig>
+	    <partitions>
+		    <partition name="varlog" size="500" mountpoint="/var/log" filesystem="btrfs"/>
+	    </partitions>
+        </type>
+    </preferences>
+    <preferences profiles="xfs-gnome">
+        <type image="oem" filesystem="xfs" firmware="efi" installiso="false" installboot="install" kernelcmdline="console=ttyS0" devicepersistency="by-partuuid" editbootinstall="set_varlog_uuid.sh" efipartsize="200" fscreateoptions="-m rmapbt=1">
+	    <size unit="G" additive="false">51</size>
+            <bootloader name="systemd_boot" timeout="0"/>
+            <oemconfig>
+                <oem-swap>true</oem-swap>
+                <oem-unattended>true</oem-unattended>
+                <oem-device-filter>/dev/ram</oem-device-filter>
+                <oem-multipath-scan>false</oem-multipath-scan>
+            </oemconfig>
+	    <partitions>
+		    <partition name="varlog" size="500" mountpoint="/var/log" filesystem="xfs"/>
+	    </partitions>
+        </type>
+    </preferences>
+    <preferences profiles="bcachefs-gnome">
+        <type image="oem" filesystem="bcachefs" firmware="efi" installiso="false" installboot="install" kernelcmdline="console=ttyS0" devicepersistency="by-partuuid" editbootinstall="set_varlog_uuid.sh" efipartsize="200">
+	    <size unit="G" additive="false">51</size>
+            <bootloader name="systemd_boot" timeout="0"/>
+            <oemconfig>
+                <oem-swap>true</oem-swap>
+                <oem-unattended>true</oem-unattended>
+                <oem-device-filter>/dev/ram</oem-device-filter>
+                <oem-multipath-scan>false</oem-multipath-scan>
+            </oemconfig>
+	    <partitions>
+		    <partition name="varlog" size="500" mountpoint="/var/log" filesystem="bcachefs"/>
+	    </partitions>
+        </type>
+    </preferences>
+    <preferences profiles="f2fs-gnome">
+        <type image="oem" filesystem="f2fs" firmware="efi" installiso="false" installboot="install" kernelcmdline="console=ttyS0" devicepersistency="by-partuuid" editbootinstall="set_varlog_uuid.sh" efipartsize="200" fscreateoptions="-O extra_attr,flexible_inline_xattr" fsmountoptions="inline_xattr,inline_xattr_size=160">
+	    <size unit="G" additive="false">50</size>
+            <bootloader name="systemd_boot" timeout="0"/>
+            <oemconfig>
+                <oem-swap>true</oem-swap>
+                <oem-unattended>true</oem-unattended>
+                <oem-device-filter>/dev/ram</oem-device-filter>
+                <oem-multipath-scan>false</oem-multipath-scan>
+            </oemconfig>
+	    <partitions>
+		    <partition name="varlog" size="500" mountpoint="/var/log" filesystem="f2fs"/>
+	    </partitions>
+        </type>
+    </preferences>
+
+    <users>
+        <user password="$1$1234$XJI6P4bccABjEC1v6k64V1" home="/root" name="root" groups="root"/>
+	<user password="$1$DvEv8Czj$U5t246wdPNi9SE/x6moDL0" home="/home/user" name="user" groups="user,sudo" shell="/bin/bash" />
+    </users>
+
+    <repository type="apt-deb" repository_gpgcheck="false">
+        <source path="obs://Virtualization:Appliances:Staging/Debian_12_x86_64"/>
+    </repository>
+    <repository type="apt-deb" distribution="bookworm" components="main contrib non-free" repository_gpgcheck="false">
+	    <source path="http://debian.mirror.lrz.de/debian"/>
+    </repository>
+
+    <packages type="image">
+        <package name="libpam-runtime"/>
+        <package name="attr"/>
+        <package name="plymouth-themes"/>
+        <package name="vim"/>
+        <package name="plymouth"/>
+        <package name="xz-utils"/>
+        <package name="binutils"/>
+        <package name="init"/>
+        <package name="gnupg"/>
+        <package name="iproute2"/>
+        <package name="iptables"/>
+        <package name="iputils-ping"/>
+        <package name="ifupdown"/>
+        <package name="isc-dhcp-client"/>
+        <package name="netbase"/>
+        <package name="bsdmainutils"/>
+        <package name="usrmerge"/>
+        <package name="usr-is-merged"/>
+        <package name="netplan.io"/>
+        <package name="networkd-dispatcher"/>
+        <package name="net-tools"/>
+        <package name="dbus"/>
+        <package name="netbase"/>
+        <package name="locales-all"/>
+        <package name="tzdata"/>
+        <package name="cmake"/>
+	<package name="libssl-dev"/>
+	<package name="astyle"/>
+	<package name="cmake"/>
+	<package name="gcc"/>
+	<package name="ninja-build"/>
+	<package name="libssl-dev"/>
+	<package name="libkeyutils-dev"/>
+	<package name="python3-pytest"/>
+	<package name="python3-pytest-xdist"/>
+	<package name="unzip"/>
+	<package name="xsltproc"/>
+	<package name="doxygen"/>
+	<package name="graphviz"/>
+	<package name="python3-yaml"/>
+	<package name="valgrind"/>
+	<package name="openssl"/>
+	<package name="pkg-config"/>
+	<package name="build-essential"/>
+	<package name="gawk"/>
+	<package name="sysstat"/>
+	<package name="parallel"/>
+	<package name="dracut"/>
+	<package name="dracut-kiwi-oem-repart"/>
+	<package name="dracut-kiwi-oem-dump"/>
+	<package name="systemd-boot"/>
+	<package name="hyperfine"/>
+    </packages>
+    <packages type="image" profiles="ext4-apache,btrfs-apache,xfs-apache,bcachefs-apache,f2fs-apache">
+	<package name="apt-utils"/>
+	<package name="apache2"/>
+    </packages>
+    <packages type="image" profiles="ext4-gnome,btrfs-gnome,xfs-gnome,bcachefs-gnome,f2fs-gnome" patternType="plusRecommended">
+	<package name="task-gnome-desktop"/>
+	<package name="chromium"/>
+	<file name="test-hyperfine.sh" target="/usr/local/bin/test-hyperfine.sh" owner="root:root" permissions="755"/>
+    </packages>
+    <packages type="bootstrap"/>
+</image>
