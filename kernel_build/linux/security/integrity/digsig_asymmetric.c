@@ -114,7 +114,24 @@ int asymmetric_verify(struct key *keyring, const char *sig,
 	} else if (!strncmp(pk->pkey_algo, "ecdsa-", 6)) {
 		/* edcsa-nist-p192 etc. */
 		pks.encoding = "x962";
-	} else if (!strcmp(pk->pkey_algo, "ecrdsa")) {
+	} else if (!strcmp(pk->pkey_algo, "ecrdsa") ||
+		   !strcmp(pk->pkey_algo, "mldsa44") ||
+		   !strcmp(pk->pkey_algo, "mldsa65") ||
+		   !strcmp(pk->pkey_algo, "mldsa87") ||
+		   !strcmp(pk->pkey_algo, "falcon512") ||
+		   !strcmp(pk->pkey_algo, "falcon1024") ||
+		   !strcmp(pk->pkey_algo, "sphincssha2128fsimple") ||
+		   !strcmp(pk->pkey_algo, "sphincssha2128ssimple") ||
+		   !strcmp(pk->pkey_algo, "sphincssha2192fsimple") ||
+		   !strcmp(pk->pkey_algo, "sphincssha2192ssimple") ||
+		   !strcmp(pk->pkey_algo, "sphincssha2256fsimple") ||
+		   !strcmp(pk->pkey_algo, "sphincssha2256ssimple") ||
+		   !strcmp(pk->pkey_algo, "sphincsshake128fsimple") ||
+		   !strcmp(pk->pkey_algo, "sphincsshake128ssimple") ||
+		   !strcmp(pk->pkey_algo, "sphincsshake192fsimple") ||
+		   !strcmp(pk->pkey_algo, "sphincsshake192ssimple") ||
+		   !strcmp(pk->pkey_algo, "sphincsshake256fsimple") ||
+		   !strcmp(pk->pkey_algo, "sphincsshake256ssimple")) {
 		pks.encoding = "raw";
 	} else {
 		ret = -ENOPKG;

@@ -145,6 +145,29 @@ enum OID {
 	OID_id_rsassa_pkcs1_v1_5_with_sha3_384, /* 2.16.840.1.101.3.4.3.15 */
 	OID_id_rsassa_pkcs1_v1_5_with_sha3_512, /* 2.16.840.1.101.3.4.3.16 */
 
+	/* PQC stuff */
+	OID_mldsa44,				/* 1.3.6.1.4.1.2.267.12.4.4 */
+	OID_mldsa65,				/* 1.3.6.1.4.1.2.267.12.6.5 */
+	OID_mldsa87,				/* 1.3.6.1.4.1.2.267.12.8.7 */
+	OID_dilithium2,				/* 1.3.6.1.4.1.2.267.7.4.4 */
+	OID_dilithium3,				/* 1.3.6.1.4.1.2.267.7.6.5 */
+	OID_dilithium5,				/* 1.3.6.1.4.1.2.267.7.8.7 */
+	OID_falcon512,				/* 1.3.9999.3.11 */
+	OID_falcon1024,				/* 1.3.9999.3.14 */
+	OID_sphincssha2128fsimple,		/* 1.3.9999.6.4.13 */
+	OID_sphincssha2128ssimple,		/* 1.3.9999.6.4.16 */
+	OID_sphincssha2192fsimple,		/* 1.3.9999.6.5.10 */
+	OID_sphincssha2192ssimple,		/* 1.3.9999.6.5.12 */
+	OID_sphincssha2256fsimple,		/* 1.3.9999.6.6.10 */
+	OID_sphincssha2256ssimple,		/* 1.3.9999.6.6.12 */
+	OID_sphincsshake128fsimple,		/* 1.3.9999.6.7.13 */
+	OID_sphincsshake128ssimple,		/* 1.3.9999.6.7.16 */
+	OID_sphincsshake192fsimple,		/* 1.3.9999.6.8.10 */
+	OID_sphincsshake192ssimple,		/* 1.3.9999.6.8.12 */
+	OID_sphincsshake256fsimple,		/* 1.3.9999.6.9.10 */
+	OID_sphincsshake256ssimple,		/* 1.3.9999.6.9.12 */
+
+
 	OID__NR
 };
 

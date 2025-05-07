@@ -257,6 +257,25 @@ int x509_note_sig_algo(void *context, size_t hdrlen, unsigned char tag,
 	case OID_gost2012Signature512:
 		ctx->cert->sig->hash_algo = "streebog512";
 		goto ecrdsa;
+#define CASE_PQC_ALGO(algo) case OID_ ##algo: ctx->cert->sig->pkey_algo = #algo; goto pqc;
+	CASE_PQC_ALGO(mldsa44)
+	CASE_PQC_ALGO(mldsa65)
+	CASE_PQC_ALGO(mldsa87)
+	CASE_PQC_ALGO(falcon512)
+	CASE_PQC_ALGO(falcon1024)
+	CASE_PQC_ALGO(sphincssha2128fsimple)
+	CASE_PQC_ALGO(sphincssha2128ssimple)
+	CASE_PQC_ALGO(sphincssha2192fsimple)
+	CASE_PQC_ALGO(sphincssha2192ssimple)
+	CASE_PQC_ALGO(sphincssha2256fsimple)
+	CASE_PQC_ALGO(sphincssha2256ssimple)
+	CASE_PQC_ALGO(sphincsshake128fsimple)
+	CASE_PQC_ALGO(sphincsshake128ssimple)
+	CASE_PQC_ALGO(sphincsshake192fsimple)
+	CASE_PQC_ALGO(sphincsshake192ssimple)
+	CASE_PQC_ALGO(sphincsshake256fsimple)
+	CASE_PQC_ALGO(sphincsshake256ssimple)
+#undef CASE_PQC_ALGO
 	}
 
 rsa_pkcs1:
@@ -272,6 +291,11 @@ ecrdsa:
 ecdsa:
 	ctx->cert->sig->pkey_algo = "ecdsa";
 	ctx->cert->sig->encoding = "x962";
+	ctx->sig_algo = ctx->last_oid;
+	return 0;
+pqc:
+	ctx->cert->sig->hash_algo = "sha256";
+	ctx->cert->sig->encoding = "raw";
 	ctx->sig_algo = ctx->last_oid;
 	return 0;
 }
@@ -300,6 +324,23 @@ int x509_note_signature(void *context, size_t hdrlen,
 
 	if (strcmp(ctx->cert->sig->pkey_algo, "rsa") == 0 ||
 	    strcmp(ctx->cert->sig->pkey_algo, "ecrdsa") == 0 ||
+	    strcmp(ctx->cert->sig->pkey_algo, "mldsa44") == 0 ||
+	    strcmp(ctx->cert->sig->pkey_algo, "mldsa65") == 0 ||
+	    strcmp(ctx->cert->sig->pkey_algo, "mldsa87") == 0 ||
+	    strcmp(ctx->cert->sig->pkey_algo, "falcon512") == 0 ||
+	    strcmp(ctx->cert->sig->pkey_algo, "falcon1024") == 0 ||
+	    strcmp(ctx->cert->sig->pkey_algo, "sphincssha2128fsimple") == 0 ||
+	    strcmp(ctx->cert->sig->pkey_algo, "sphincssha2128ssimple") == 0 ||
+	    strcmp(ctx->cert->sig->pkey_algo, "sphincssha2192fsimple") == 0 ||
+	    strcmp(ctx->cert->sig->pkey_algo, "sphincssha2192ssimple") == 0 ||
+	    strcmp(ctx->cert->sig->pkey_algo, "sphincssha2256fsimple") == 0 ||
+	    strcmp(ctx->cert->sig->pkey_algo, "sphincssha2256ssimple") == 0 ||
+	    strcmp(ctx->cert->sig->pkey_algo, "sphincsshake128fsimple") == 0 ||
+	    strcmp(ctx->cert->sig->pkey_algo, "sphincsshake128ssimple") == 0 ||
+	    strcmp(ctx->cert->sig->pkey_algo, "sphincsshake192fsimple") == 0 ||
+	    strcmp(ctx->cert->sig->pkey_algo, "sphincsshake192ssimple") == 0 ||
+	    strcmp(ctx->cert->sig->pkey_algo, "sphincsshake256fsimple") == 0 ||
+	    strcmp(ctx->cert->sig->pkey_algo, "sphincsshake256ssimple") == 0 ||
 	    strcmp(ctx->cert->sig->pkey_algo, "ecdsa") == 0) {
 		/* Discard the BIT STRING metadata */
 		if (vlen < 1 || *(const u8 *)value != 0)
@@ -504,6 +545,25 @@ int x509_extract_key_data(void *context, size_t hdrlen,
 	case OID_gost2012PKey512:
 		ctx->cert->pub->pkey_algo = "ecrdsa";
 		break;
+#define CASE_PQC_ALGO(algo) case OID_ ##algo: ctx->cert->pub->pkey_algo = #algo; break;
+	CASE_PQC_ALGO(mldsa44)
+	CASE_PQC_ALGO(mldsa65)
+	CASE_PQC_ALGO(mldsa87)
+	CASE_PQC_ALGO(falcon512)
+	CASE_PQC_ALGO(falcon1024)
+	CASE_PQC_ALGO(sphincssha2128fsimple)
+	CASE_PQC_ALGO(sphincssha2128ssimple)
+	CASE_PQC_ALGO(sphincssha2192fsimple)
+	CASE_PQC_ALGO(sphincssha2192ssimple)
+	CASE_PQC_ALGO(sphincssha2256fsimple)
+	CASE_PQC_ALGO(sphincssha2256ssimple)
+	CASE_PQC_ALGO(sphincsshake128fsimple)
+	CASE_PQC_ALGO(sphincsshake128ssimple)
+	CASE_PQC_ALGO(sphincsshake192fsimple)
+	CASE_PQC_ALGO(sphincsshake192ssimple)
+	CASE_PQC_ALGO(sphincsshake256fsimple)
+	CASE_PQC_ALGO(sphincsshake256ssimple)
+#undef CASE_PQC_ALGO
 	case OID_id_ecPublicKey:
 		if (parse_OID(ctx->params, ctx->params_size, &oid) != 0)
 			return -EBADMSG;

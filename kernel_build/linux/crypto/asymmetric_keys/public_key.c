@@ -132,6 +132,32 @@ software_key_determine_akcipher(const struct public_key *pkey,
 		if (strcmp(hash_algo, "streebog256") != 0 &&
 		    strcmp(hash_algo, "streebog512") != 0)
 			return -EINVAL;
+		   strcmp(pkey->pkey_algo, "mldsa44") == 0 ||
+		   strcmp(pkey->pkey_algo, "mldsa65") == 0 ||
+		   strcmp(pkey->pkey_algo, "mldsa87") == 0 ||
+		   strcmp(pkey->pkey_algo, "falcon512") == 0 ||
+		   strcmp(pkey->pkey_algo, "falcon1024") == 0 ||
+		   strcmp(pkey->pkey_algo, "sphincssha2128fsimple") == 0 ||
+		   strcmp(pkey->pkey_algo, "sphincssha2128ssimple") == 0 ||
+		   strcmp(pkey->pkey_algo, "sphincssha2192fsimple") == 0 ||
+		   strcmp(pkey->pkey_algo, "sphincssha2192ssimple") == 0 ||
+		   strcmp(pkey->pkey_algo, "sphincssha2256fsimple") == 0 ||
+		   strcmp(pkey->pkey_algo, "sphincssha2256ssimple") == 0 ||
+		   strcmp(pkey->pkey_algo, "sphincsshake128fsimple") == 0 ||
+		   strcmp(pkey->pkey_algo, "sphincsshake128ssimple") == 0 ||
+		   strcmp(pkey->pkey_algo, "sphincsshake192fsimple") == 0 ||
+		   strcmp(pkey->pkey_algo, "sphincsshake192ssimple") == 0 ||
+		   strcmp(pkey->pkey_algo, "sphincsshake256fsimple") == 0 ||
+		   strcmp(pkey->pkey_algo, "sphincsshake256ssimple") == 0) {
+		if (strcmp(encoding, "raw") != 0) {
+			return -EINVAL;
+		}
+		if (!hash_algo) {
+			return -EINVAL;
+		}
+		if (strcmp(hash_algo, "sha256") != 0) {
+			return -EINVAL;
+		}
 	} else {
 		/* Unknown public key algorithm */
 		return -ENOPKG;

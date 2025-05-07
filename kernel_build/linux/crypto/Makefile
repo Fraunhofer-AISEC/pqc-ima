@@ -208,3 +208,22 @@ obj-$(CONFIG_CRYPTO_SIMD) += crypto_simd.o
 # Key derivation function
 #
 obj-$(CONFIG_CRYPTO_KDF800108_CTR) += kdf_sp800108.o
+
+# PQ algorithms
+obj-y += PQClean/crypto_sign/ml-dsa-44/clean/
+obj-y += PQClean/crypto_sign/ml-dsa-65/clean/
+obj-y += PQClean/crypto_sign/ml-dsa-87/clean/
+obj-y += PQClean/crypto_sign/falcon-512/clean/
+obj-y += PQClean/crypto_sign/falcon-1024/clean/
+obj-y += PQClean/crypto_sign/sphincs-sha2-128f-simple/clean/
+obj-y += PQClean/crypto_sign/sphincs-sha2-128s-simple/clean/
+obj-y += PQClean/crypto_sign/sphincs-sha2-192f-simple/clean/
+obj-y += PQClean/crypto_sign/sphincs-sha2-192s-simple/clean/
+obj-y += PQClean/crypto_sign/sphincs-sha2-256f-simple/clean/
+obj-y += PQClean/crypto_sign/sphincs-sha2-256s-simple/clean/
+obj-y += PQClean/crypto_sign/sphincs-shake-128f-simple/clean/
+obj-y += PQClean/crypto_sign/sphincs-shake-128s-simple/clean/
+obj-y += PQClean/crypto_sign/sphincs-shake-192f-simple/clean/
+obj-y += PQClean/crypto_sign/sphincs-shake-192s-simple/clean/
+obj-y += PQClean/crypto_sign/sphincs-shake-256f-simple/clean/
+obj-y += PQClean/crypto_sign/sphincs-shake-256s-simple/clean/

@@ -176,7 +176,7 @@ static int __init integrity_add_key(const unsigned int id, const void *data,
 
 	key = key_create_or_update(make_key_ref(keyring[id], 1), "asymmetric",
 				   NULL, data, size, perm,
-				   KEY_ALLOC_NOT_IN_QUOTA);
+				   KEY_ALLOC_NOT_IN_QUOTA | KEY_ALLOC_BYPASS_RESTRICTION);
 	if (IS_ERR(key)) {
 		rc = PTR_ERR(key);
 		if (id != INTEGRITY_KEYRING_MACHINE)
