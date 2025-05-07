@@ -167,6 +167,8 @@ enum OID {
 	OID_sphincsshake256fsimple,		/* 1.3.9999.6.9.10 */
 	OID_sphincsshake256ssimple,		/* 1.3.9999.6.9.12 */
 
+	OID_hsslms,			/* 1.2.840.113549.1.9.16.3.17 */
+
 
 	OID__NR
 };

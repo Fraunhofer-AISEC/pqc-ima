@@ -227,3 +227,5 @@ obj-y += PQClean/crypto_sign/sphincs-shake-192f-simple/clean/
 obj-y += PQClean/crypto_sign/sphincs-shake-192s-simple/clean/
 obj-y += PQClean/crypto_sign/sphincs-shake-256f-simple/clean/
 obj-y += PQClean/crypto_sign/sphincs-shake-256s-simple/clean/
+
+obj-y += hss-lms/

@@ -115,6 +115,7 @@ int asymmetric_verify(struct key *keyring, const char *sig,
 		/* edcsa-nist-p192 etc. */
 		pks.encoding = "x962";
 	} else if (!strcmp(pk->pkey_algo, "ecrdsa") ||
+		   !strcmp(pk->pkey_algo, "hsslms") ||
 		   !strcmp(pk->pkey_algo, "mldsa44") ||
 		   !strcmp(pk->pkey_algo, "mldsa65") ||
 		   !strcmp(pk->pkey_algo, "mldsa87") ||

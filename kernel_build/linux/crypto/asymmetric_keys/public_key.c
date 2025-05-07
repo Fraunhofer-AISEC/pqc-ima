@@ -132,6 +132,7 @@ software_key_determine_akcipher(const struct public_key *pkey,
 		if (strcmp(hash_algo, "streebog256") != 0 &&
 		    strcmp(hash_algo, "streebog512") != 0)
 			return -EINVAL;
+	} else if (strcmp(pkey->pkey_algo, "hsslms") == 0 ||
 		   strcmp(pkey->pkey_algo, "mldsa44") == 0 ||
 		   strcmp(pkey->pkey_algo, "mldsa65") == 0 ||
 		   strcmp(pkey->pkey_algo, "mldsa87") == 0 ||

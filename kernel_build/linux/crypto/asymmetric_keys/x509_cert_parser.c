@@ -258,6 +258,7 @@ int x509_note_sig_algo(void *context, size_t hdrlen, unsigned char tag,
 		ctx->cert->sig->hash_algo = "streebog512";
 		goto ecrdsa;
 #define CASE_PQC_ALGO(algo) case OID_ ##algo: ctx->cert->sig->pkey_algo = #algo; goto pqc;
+	CASE_PQC_ALGO(hsslms)
 	CASE_PQC_ALGO(mldsa44)
 	CASE_PQC_ALGO(mldsa65)
 	CASE_PQC_ALGO(mldsa87)
@@ -324,6 +325,7 @@ int x509_note_signature(void *context, size_t hdrlen,
 
 	if (strcmp(ctx->cert->sig->pkey_algo, "rsa") == 0 ||
 	    strcmp(ctx->cert->sig->pkey_algo, "ecrdsa") == 0 ||
+	    strcmp(ctx->cert->sig->pkey_algo, "hsslms") == 0 ||
 	    strcmp(ctx->cert->sig->pkey_algo, "mldsa44") == 0 ||
 	    strcmp(ctx->cert->sig->pkey_algo, "mldsa65") == 0 ||
 	    strcmp(ctx->cert->sig->pkey_algo, "mldsa87") == 0 ||
@@ -546,6 +548,7 @@ int x509_extract_key_data(void *context, size_t hdrlen,
 		ctx->cert->pub->pkey_algo = "ecrdsa";
 		break;
 #define CASE_PQC_ALGO(algo) case OID_ ##algo: ctx->cert->pub->pkey_algo = #algo; break;
+	CASE_PQC_ALGO(hsslms)
 	CASE_PQC_ALGO(mldsa44)
 	CASE_PQC_ALGO(mldsa65)
 	CASE_PQC_ALGO(mldsa87)
