@@ -1,0 +1,4 @@
+mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
+ccflags-y += -I$(dir $(mkfile_path))/../../../common
+obj-y		:= falcon512.o
+falcon512-y	:= codec.o common.o fft.o fpr.o keygen.o pqclean.o rng.o sign.o vrfy.o main_module.o #../../../common/fips202.o

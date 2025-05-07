@@ -1,0 +1,4 @@
+mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
+ccflags-y += -I$(dir $(mkfile_path))/../../../common
+obj-y		:= mldsa44.o
+mldsa44-y	:= ntt.o packing.o poly.o polyvec.o reduce.o rounding.o sign.o symmetric-shake.o main_module.o ../../../common/fips202.o
