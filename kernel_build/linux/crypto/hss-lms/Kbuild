@@ -1,0 +1,4 @@
+mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
+ccflags-y += -I$(dir $(mkfile_path))/../../../common
+obj-y		:= hsslms.o
+hsslms-y	:= endian.o hash.o hss_common.o hss_thread_single.o hss_verify.o hss_zeroize.o lm_common.o lm_ots_common.o lm_ots_verify.o lm_verify.o sha256.o main_module.o
