@@ -1,0 +1,4 @@
+mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
+ccflags-y += -I$(dir $(mkfile_path))/../../../common
+obj-y		:= sphincs_sha2_128f_simple.o
+sphincs_sha2_128f_simple-y	:= address.o context_sha2.o fors.o hash_sha2.o merkle.o sign.o sign.o thash_sha2_simple.o utils.o utilsx1.o wots.o wotsx1.o main_module.o ../../../common/sha2.o
