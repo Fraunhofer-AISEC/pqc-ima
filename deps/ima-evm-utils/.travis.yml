@@ -1,0 +1,98 @@
+# Copyright (c) 2017-2021 Petr Vorel <pvorel@suse.cz>
+
+dist: focal
+language: C
+services:
+    - docker
+
+matrix:
+    include:
+        # 32 bit build
+        - os: linux
+          env: DISTRO=debian:stable VARIANT=i386 ARCH=i386 TSS=tpm2-tss COMPILE_SSL=openssl-3.0.5
+          compiler: gcc
+
+        # cross compilation builds
+        - os: linux
+          env: DISTRO=debian:stable VARIANT=cross-compile ARCH=ppc64el TSS=ibmtss
+          compiler: powerpc64le-linux-gnu-gcc
+
+        - os: linux
+          env: DISTRO=debian:stable VARIANT=cross-compile ARCH=arm64 TSS=tpm2-tss
+          compiler: aarch64-linux-gnu-gcc
+
+        - os: linux
+          env: DISTRO=debian:stable VARIANT=cross-compile ARCH=s390x TSS=ibmtss
+          compiler: s390x-linux-gnu-gcc
+
+        # musl
+        - os: linux
+          env: DISTRO=alpine:latest TSS=tpm2-tss CONTAINER=podman CONTAINER_ARGS="--runtime=/usr/bin/crun --network=host"
+          compiler: gcc
+
+        # glibc (gcc/clang)
+        - os: linux
+          env: DISTRO=opensuse/tumbleweed TSS=ibmtss CONTAINER=podman CONTAINER_ARGS="--runtime=/usr/bin/crun --network=host"
+          compiler: clang
+
+        - os: linux
+          env: DISTRO=opensuse/leap TSS=tpm2-tss
+          compiler: gcc
+
+        - os: linux
+          env: DISTRO=ubuntu:noble TSS=ibmtss
+          compiler: gcc
+
+        - os: linux
+          env: DISTRO=ubuntu:jammy TSS=ibmtss
+          compiler: gcc
+
+        - os: linux
+          env: DISTRO=ubuntu:xenial TSS=tpm2-tss
+          compiler: clang
+
+        - os: linux
+          env: DISTRO=fedora:latest TSS=ibmtss CONTAINER=podman CONTAINER_ARGS="--runtime=/usr/bin/crun --network=host"
+          compiler: clang
+
+        - os: linux
+          env: REPO="quay.io/centos/" DISTRO="${REPO}centos:stream9" TSS=tpm2-tss CONTAINER=podman CONTAINER_ARGS="--runtime=/usr/bin/crun --network=host"
+          compiler: clang
+
+        - os: linux
+          env: DISTRO=debian:testing TSS=tpm2-tss
+          compiler: clang
+
+        - os: linux
+          env: DISTRO=debian:stable TSS=ibmtss
+          compiler: gcc
+
+        - os: linux
+          env: REPO="docker.io/library/" DISTRO=${REPO}alt:sisyphus TSS=libtpm2-tss-devel CONTAINER=podman CONTAINER_ARGS="--runtime=/usr/bin/crun --network=host"
+          compiler: gcc
+
+before_install:
+    # Tumbleweed requires podman due docker incompatible with glibc 2.33
+    # (faccessat2) and crun (for clone3).
+    - CONTAINER="${CONTAINER:-docker}"
+    - >
+        if [ "$CONTAINER" = "podman" ]; then
+            # podman
+            . /etc/os-release
+            sudo sh -c "echo 'deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list"
+            wget -nv https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/xUbuntu_${VERSION_ID}/Release.key -O- | sudo apt-key add -
+            sudo apt update
+            sudo apt -y install fuse-overlayfs podman slirp4netns crun
+        fi
+    - $CONTAINER info
+
+    - DIR="/usr/src/ima-evm-utils"
+    - printf "FROM $DISTRO\nRUN mkdir -p $DIR\nWORKDIR $DIR\nCOPY . $DIR\n" > Dockerfile
+    - cat Dockerfile
+    - $CONTAINER build $CONTAINER_ARGS -t ima-evm-utils .
+
+script:
+    - INSTALL="${DISTRO#${REPO}}"
+    - INSTALL="${INSTALL%%:*}"
+    - INSTALL="${INSTALL%%/*}"
+    - $CONTAINER run $CONTAINER_ARGS -t ima-evm-utils /bin/sh -c "if [ \"$VARIANT\" ]; then ARCH=\"$ARCH\" ./ci/$INSTALL.$VARIANT.sh; fi && ARCH=\"$ARCH\" CC=\"$CC\" TSS=\"$TSS\" ./ci/$INSTALL.sh && if [ \"$COMPILE_SSL\" ]; then COMPILE_SSL=\"$COMPILE_SSL\" VARIANT=\"$VARIANT\" ./tests/install-openssl3.sh; fi && if [ ! \"$VARIANT\" ]; then which tpm_server || which swtpm || if which tssstartup; then ./tests/install-swtpm.sh; fi; fi && CC=\"$CC\" VARIANT=\"$VARIANT\" COMPILE_SSL=\"$COMPILE_SSL\" ./build.sh"
