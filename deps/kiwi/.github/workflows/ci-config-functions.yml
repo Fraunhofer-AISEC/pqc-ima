@@ -1,0 +1,53 @@
+---
+name: CI-Config-Functions
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "kiwi/config/functions.sh"
+      - ".github/workflows/**"
+      - "test/scripts/**"
+      - "tox.ini"
+      - "*requirements.txt"
+  pull_request:
+    paths:
+      # copy-pasta from the above because workflows don't support anchors :-(
+      - "kiwi/config/functions.sh"
+      - ".github/workflows/**"
+      - "test/scripts/**"
+      - "tox.ini"
+      - "*requirements.txt"
+
+jobs:
+  scripts_integration_tests:
+    name: Integration tests for config/functions.sh
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        container_runtime:
+          - DOCKER
+          - PODMAN
+    steps:
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            .tox/
+          key: pip-${{ hashFiles('.virtualenv.dev-requirements.txt') }}-${{ hashFiles('.virtualenv.requirements.txt') }}
+          restore-keys: |
+            -pip-
+
+      - name: checkout source code
+        uses: actions/checkout@v3
+      - name: set up Python
+        uses: actions/setup-python@v4
+      - name: Install Tox
+        run: sudo apt update && sudo apt install tox
+
+      - name: Run the scripts integration tests
+        run: sudo tox -e scripts
+        env:
+          CONTAINER_RUNTIME: ${{ matrix.container_runtime }}
