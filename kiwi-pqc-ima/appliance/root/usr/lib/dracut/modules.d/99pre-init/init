@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# Copyright(c) 2025 Fraunhofer AISEC
+# Fraunhofer-Gesellschaft zur Foerderung der angewandten Forschung e.V.
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms and conditions of the GNU General Public License,
+# version 2 (GPL 2), as published by the Free Software Foundation.
+#
+# This program is distributed in the hope it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE. See the GPL 2 license for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, see <http://www.gnu.org/licenses/>
+#
+
+setup () {
+	# mount required file systems
+	mount -t proc none /proc
+	mount -t sysfs none /sys
+	mount -t devtmpfs none /dev
+}
+
+cleanup () {
+	# cleanup mounted file systems
+	# and let systemd do proper initialization
+
+
+	# unmount virtual file systems in reverse order
+	umount -l /dev
+	umount -l /sys
+	umount -l /proc
+}
+
+setup
+/bin/sh
+cleanup
+
+# run actual init
+exec /real_init

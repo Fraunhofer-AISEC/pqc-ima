@@ -1,0 +1,9 @@
+[Unit]
+Description=Boottime Measurement Service
+After=graphical.target
+
+[Service]
+ExecStart=/usr/local/bin/measure-boottime.sh
+
+[Install]
+WantedBy=graphical.target

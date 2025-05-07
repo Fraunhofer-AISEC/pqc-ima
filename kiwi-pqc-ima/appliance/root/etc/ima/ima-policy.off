@@ -1,0 +1,33 @@
+# PROC_SUPER_MAGIC
+dont_appraise fsmagic=0x9fa0
+# SYSFS_MAGIC
+dont_appraise fsmagic=0x62656572
+# DEBUGFS_MAGIC
+dont_appraise fsmagic=0x64626720
+# TMPFS_MAGIC
+dont_appraise fsmagic=0x1021994
+# RAMFS_MAGIC
+dont_appraise fsmagic=0x858458f6
+# DEVPTS_SUPER_MAGIC
+dont_appraise fsmagic=0x1cd1
+# BINFMTFS_MAGIC
+dont_appraise fsmagic=0x42494e4d
+# SECURITYFS_MAGIC
+dont_appraise fsmagic=0x73636673
+# SELINUX_MAGIC
+dont_appraise fsmagic=0xf97cff8c
+# SMACK_MAGIC
+dont_appraise fsmagic=0x43415d53
+# NSFS_MAGIC
+dont_appraise fsmagic=0x6e736673
+# CGROUP_SUPER_MAGIC
+dont_appraise fsmagic=0x27e0eb
+# CGROUP2_SUPER_MAGIC
+dont_appraise fsmagic=0x63677270
+
+# do not appraise /var/log
+dont_measure fsuuid=##FSUUID##
+dont_appraise fsuuid=##FSUUID##
+
+appraise func=POLICY_CHECK appraise_type=imasig
+appraise fowner=0 appraise_type=imasig

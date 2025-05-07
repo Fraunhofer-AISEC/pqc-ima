@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Close Window</title>
+    <script>
+        async function closeAfterDelay() {
+            window.close();
+        }
+        window.onload = closeAfterDelay;
+    </script>
+</head>
+<body>
+    <p>The window will close automatically.</p>
+</body>
+</html>

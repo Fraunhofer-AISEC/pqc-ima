@@ -1,0 +1,7 @@
+[Unit]
+Description=test hyperfine
+
+[Service]
+Type=exec
+Restart=no
+ExecStart=gnome-terminal -- /usr/local/bin/test-hyperfine.sh

@@ -1,0 +1,9 @@
+[Unit]
+Description=Timer for hyperfine
+
+[Timer]
+OnStartupSec=20s
+Unit=test-hyperfine.service
+
+[Install]
+WantedBy=timers.target
