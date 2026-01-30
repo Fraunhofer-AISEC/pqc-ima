@@ -78,6 +78,9 @@ while [[ "$#" -gt 0 ]]; do
                 --run-jupyter)
                         FUNC=run_jupyter
                         ;;
+                build_linux_internal)
+                        FUNC=build_linux_internal
+                        ;;
                 *)
                         echo "Unknown parameter passed: $1"; exit 1 ;;
         esac
